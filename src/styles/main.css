@@ -1,16 +1,46 @@
 @import './markdown.css';
 
+html {
+  /* Prevent width from jumping when navigating from page with scrollbar to no scrollbar */
+  /* margin-left: calc(100vw - 100%) !important; */
+}
+
 html,
 body,
 #app {
-  height: 100%;
+  height: auto;
   margin: 0;
   padding: 0;
+  font-size: 16px;
+}
+
+html {
+  /* background-image: url('/background/light_top_left.avif'), url('/background/light_top_right.avif'),
+    url('/background/light_bottom.avif');
+  background-position: top left, top right, bottom center;
+  background-repeat: no-repeat; */
+  /* background-color: #fff;
+  color-scheme: light;
+  background-attachment: fixed;
+  background-size: cover; */
 }
 
 html.dark {
-  background: #121212;
-  color-scheme: dark;
+  /* background-image: url('/background/Top_left.avif'), url('/background/Top_right.avif'),
+    url('/background/Bottom.jpg');
+  background-position: top left, top right, bottom center;
+  background-repeat: no-repeat; */
+  /* background-color: rgb(10, 20, 21); */
+  /* background-color: #0a0d15; */
+  /* background: rgb(10, 13, 21); */
+  /* background: linear-gradient(79deg, rgb(10, 13, 21) 0%, rgb(19, 25, 41) 100%); */
+  /* background: linear-gradient(79deg, #101124, rgb(20, 27, 45) 100%); */
+  /* background: linear-gradient(79deg, #111230, rgb(18, 32, 59) 100%); */
+  /* background: linear-gradient(79deg, #0b0c25, rgb(14 25 50) 100%); */
+  background: linear-gradient(79deg, #0b0c25, rgb(22 38 73) 100%);
+  /* color-scheme: dark; */
+  /* background-attachment: fixed;
+  background-size: cover; */
 }
 
 #nprogress {
@@ -26,4 +56,86 @@ html.dark {
   left: 0;
   width: 100%;
   height: 2px;
+}
+
+.table-shadow-dark {
+  box-shadow: 0.3rem 0.3rem hsl(0, 0%, 15%);
+}
+
+.table-shadow {
+  box-shadow: 0.3rem 0.3rem hsl(0, 0%, 90%);
+}
+
+.transform-rotate-180-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.transform-rotate-180-hover:hover {
+  transform: rotate(180deg);
+}
+
+.bg-green-gradient {
+  background: linear-gradient(89.29deg, #34739c -48.14%, #3cd68d 127.87%);
+}
+
+button.bg-green-gradient:hover {
+  background: linear-gradient(89.29deg, #224a66 -48.14%, #299562 127.87%);
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(89.29deg, #101c88 -48.14%, #2d42fc 127.87%);
+}
+button.bg-blue-gradient:hover {
+  background: linear-gradient(89.29deg, #1829c4 -48.14%, #4255fe 127.87%);
+}
+
+.bg-orange-gradient {
+  background: linear-gradient(89.29deg, #b47706 -48.14%, #ffec22 127.87%);
+}
+
+.bg-pink-gradient {
+  background: linear-gradient(89.29deg, #cd11ae -48.14%, #ff1cff 127.87%);
+}
+
+.bg-metal-gradient {
+  background: linear-gradient(89.29deg, #09203f -48.14%, #537895 127.87%);
+}
+
+.bg-metal-gradient-light {
+  background: linear-gradient(90deg, #a5c6fe -48.14%, #c3e9fb 127.87%);
+}
+
+.bg-purple-gradient {
+  background: linear-gradient(90deg, #18023d -48.14%, #5941ff 127.87%);
+}
+
+.bg-purple-gradient-light {
+  background: linear-gradient(90deg, #ffffff -48.14%, #2b10e8 127.87%);
+}
+
+.bg-red-gradient {
+  background: linear-gradient(90deg, #3d0202 -48.14%, #ff4141 127.87%);
+}
+
+.bg-red-gradient-light {
+  background: linear-gradient(90deg, #ffffff -48.14%, #e81010 127.87%);
+}
+
+.gradient-animate {
+  background-size: 400%;
+
+  -webkit-animation: gradientAnimate 3s ease infinite;
+  -moz-animation: gradientAnimate 3s ease infinite;
+  animation: gradientAnimate 3s ease infinite;
+}
+
+@keyframes gradientAnimate {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }

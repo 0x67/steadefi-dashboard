@@ -1,56 +1,30 @@
 <script setup lang="ts">
-defineOptions({
-  name: 'IndexPage',
-})
-const user = useUserStore()
-const name = ref(user.savedName)
+onMounted(async () => {
+  if (!isDark.value) toggleDark();
+});
 
-const router = useRouter()
-function go() {
-  if (name.value)
-    router.push(`/hi/${encodeURIComponent(name.value)}`)
+const dashboard = useDashboardStore()
+
+async function init() {
+  await dashboard.fetchTvlChartHistory()
 }
 
-const { t } = useI18n()
+
+init()
 </script>
 
 <template>
-  <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
-    </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
-    <p>
-      <em text-sm opacity-75>{{ t('intro.desc') }}</em>
-    </p>
-
-    <div py-4 />
-
-    <TheInput
-      v-model="name"
-      :placeholder="t('intro.whats-your-name')"
-      autocomplete="false"
-      @keydown.enter="go"
-    />
-    <label class="hidden" for="input">{{ t('intro.whats-your-name') }}</label>
-
-    <div>
-      <button
-        m-3 text-sm btn
-        :disabled="!name"
-        @click="go"
-      >
-        {{ t('button.go') }}
-      </button>
+  <div class="text-blue-primary w-full gap-[40px] md:flex md:flex-wrap" dark="text-white">
+    <div class="flex-1 w-full min-w-[300px] min-h-[50px]">
+      <div class="my-[20px]">
+      </div>
     </div>
   </div>
 </template>
 
 <route lang="yaml">
 meta:
-  layout: home
+  layout: app
 </route>
+
+<style scoped></style>
