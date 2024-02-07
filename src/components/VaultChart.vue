@@ -146,7 +146,7 @@ function updateVaultStackedTvlOptions() {
 }
 
 function formatterTooltipLiquidity(params: any) {
-  const tooltips = params.map((param: any) => {
+  const tooltips = params.sort((a: any, b: any) => b.value - a.value).map((param: any) => {
     return `
       <div class="flex gap-2 items-center">
         <div class="rounded-sm h-12px w-12px " style="background: ${param.color}"></div>
