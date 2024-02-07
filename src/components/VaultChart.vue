@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
-import { LineChart } from 'echarts/charts';
+import { LineChart, BarChart } from 'echarts/charts';
 import {
   TitleComponent,
   TooltipComponent,
@@ -17,6 +17,7 @@ import { storeToRefs } from 'pinia';
 
 use([
   CanvasRenderer,
+  BarChart,
   LineChart,
   TitleComponent,
   GridComponent,
@@ -28,9 +29,9 @@ use([
 ]);
 
 const dashboard = useDashboardStore();
-const { lendingTvlHistoryData, vaultTvlHistoryData } = storeToRefs(dashboard);
+const { lendingTvlHistoryData, vaultTvlHistoryData, uniqueDatetime, uniqueLendings, uniqueVaults } = storeToRefs(dashboard);
 
-const stackedTvlOptions = ref({
+const defaultOptions = ref({
   title: {
     text: 'Stacked TVL'
   },
@@ -61,31 +62,30 @@ const stackedTvlOptions = ref({
 
 const lendingStackedTvlOptions = ref({})
 const vaultStackedTvlOptions = ref({})
+const lendingInflowOptions = ref({})
+const vaultInflowOptions = ref({})
 
 function updateLendingStackedTvlOptions() {
-  const uniqueTimestamps = new Set(lendingTvlHistoryData.value.map((item) => item.timestamp.toLocaleDateString()))
-  const uniqueLendings = new Set(lendingTvlHistoryData.value.map((item) => item.symbol))
-  
   lendingStackedTvlOptions.value = {
-    ...stackedTvlOptions.value,
+    ...defaultOptions.value,
     title: {
-      text: 'Lending TVL Breakdown',
+      text: 'Lending Vault TVL',
       textStyle: {
         color: '#ffffff',
       },
     },
     tooltip: {
-      ...stackedTvlOptions.value.tooltip,
+      ...defaultOptions.value.tooltip,
       formatter: formatterTooltipLiquidity,
     },
     xAxis: [
       {
         type: 'category',
         boundaryGap: false,
-        data: Array.from(uniqueTimestamps)
+        data: uniqueDatetime
       }
     ],
-    series: (Array.from(uniqueLendings).map((symbol) => ({
+    series: (uniqueLendings.value.map((symbol) => ({
       name: symbol,
       type: 'line',
       stack: 'Total',
@@ -93,40 +93,35 @@ function updateLendingStackedTvlOptions() {
       emphasis: {
         focus: 'series',
       },
-      data: lendingTvlHistoryData.value.filter((item) => item.symbol === symbol).map((item) => {
-        if (uniqueTimestamps.has(item.timestamp.toLocaleDateString())) {
-          return item.tvl
-        }
-        
-        return 0
-      }), 
+      data: uniqueDatetime.value.map((timestamp) => {
+        const item = lendingTvlHistoryData.value.find((item) => item.symbol === symbol && item.timestamp.toLocaleDateString() === timestamp)
+        return item ? item.tvl : 0
+      }),
     }))),
   }
 }
 
 function updateVaultStackedTvlOptions() {
-  const uniqueTimestamps = new Set(vaultTvlHistoryData.value.map((item) => item.timestamp.toLocaleDateString()))
-
   vaultStackedTvlOptions.value = {
-    ...stackedTvlOptions.value,
+    ...defaultOptions.value,
     title: {
-      text: 'Vault TVL Breakdown',
+      text: 'Strategy Vault TVL',
       textStyle: {
         color: '#ffffff',
       },
     },
     tooltip: {
-      ...stackedTvlOptions.value.tooltip,
+      ...defaultOptions.value.tooltip,
       formatter: formatterTooltipLiquidity,
     },
     xAxis: [
       {
         type: 'category',
         boundaryGap: false,
-        data: Array.from(uniqueTimestamps)
+        data: uniqueDatetime
       }
     ],
-    series: (Array.from(new Set(vaultTvlHistoryData.value.map((item) => item.symbol))).map((symbol) => ({
+    series: (uniqueVaults.value.map((symbol) => ({
       name: symbol,
       type: 'line',
       stack: 'Total',
@@ -134,14 +129,87 @@ function updateVaultStackedTvlOptions() {
       emphasis: {
         focus: 'series',
       },
-      data: vaultTvlHistoryData.value.filter((item) => item.symbol === symbol).map((item) => {
-        if (uniqueTimestamps.has(item.timestamp.toLocaleDateString())) {
-          return item.tvl
-        }
-        
-        return 0
-      }), 
+      data: uniqueDatetime.value.map((timestamp) => {
+        const item = vaultTvlHistoryData.value.find((item) => item.symbol === symbol && item.timestamp.toLocaleDateString() === timestamp)
+        return item ? item.tvl : 0
+      }),
     }))),
+  }
+}
+
+function updateLendingInflowOptions() {
+  lendingInflowOptions.value = {
+    ...defaultOptions.value,
+    title: {
+      text: 'Lending Vault Inflow',
+      textStyle: {
+        color: '#ffffff',
+      },
+    },
+    grid: {
+      ...defaultOptions.value.grid,
+      bottom: 100,
+    },
+    tooltip: {
+      ...defaultOptions.value.tooltip,
+      formatter: formatterTooltipInflow,
+    },
+    yAxis: {},
+    xAxis: {
+      data: uniqueDatetime,
+      axisLine: { onZero: true },
+      splitLine: { show: false },
+      splitArea: { show: false }
+    },
+    series: [
+      ...uniqueLendings.value.map((symbol) => ({
+        name: symbol,
+        type: 'bar',
+        stack: 'one',
+        data: uniqueDatetime.value.map((timestamp) => {
+          const item = lendingTvlHistoryData.value.find((item) => item.symbol === symbol && item.timestamp.toLocaleDateString() === timestamp)
+          return item ? item.inflow : 0
+        }),
+      })),
+    ]
+  }
+}
+
+function updateVaultInflowOptions() {
+  vaultInflowOptions.value = {
+    ...defaultOptions.value,
+    title: {
+      text: 'Strategy Vault Inflow',
+      textStyle: {
+        color: '#ffffff',
+      },
+    },
+    grid: {
+      ...defaultOptions.value.grid,
+      bottom: 100,
+    },
+    tooltip: {
+      ...defaultOptions.value.tooltip,
+      formatter: formatterTooltipInflow,
+    },
+    yAxis: {},
+    xAxis: {
+      data: uniqueDatetime,
+      axisLine: { onZero: true },
+      splitLine: { show: false },
+      splitArea: { show: false }
+    },
+    series: [
+      ...uniqueVaults.value.map((symbol) => ({
+        name: symbol,
+        type: 'bar',
+        stack: 'two',
+        data: uniqueDatetime.value.map((timestamp) => {
+          const item = vaultTvlHistoryData.value.find((item) => item.symbol === symbol && item.timestamp.toLocaleDateString() === timestamp)
+          return item ? item.inflow : 0
+        }),
+      })),
+    ]
   }
 }
 
@@ -155,7 +223,7 @@ function formatterTooltipLiquidity(params: any) {
       </div>
     `
   })
-  
+
   const total = params.reduce((acc: number, param: any) => acc + parseFloat(param.value || 0), 0)
 
   tooltips.push(`
@@ -175,9 +243,34 @@ function formatterTooltipLiquidity(params: any) {
     </div>
   `;
 }
+
+function formatterTooltipInflow(params: any) {
+  const tooltips = params.sort((a: any, b: any) => b.value - a.value).map((param: any) => {
+    return `
+        <div class="flex gap-2 items-center">
+          <div class="rounded-sm h-12px w-12px " style="background: ${param.color}"></div>
+          <span>${param.seriesName}</span>
+          <span class="ml-auto">$${parseFloat(param.value || 0).toFixed(2)}</span>
+        </div>
+    `
+  })
+
+  return `
+    <div class="bg-white font-bold rounded-5px px-5 pt-4 pb-4 text-#073146 text-13px dark:bg-#000000 dark:text-white">
+      <div class="flex h-6 items-center">
+        <span class="text-#AAAAAA">${params[0].axisValue}</span>
+      </div>
+      
+      ${tooltips.join('')}
+    </div>
+  `
+}
+
 function updateOptions() {
   updateLendingStackedTvlOptions()
   updateVaultStackedTvlOptions()
+  updateLendingInflowOptions()
+  updateVaultInflowOptions()
 }
 
 watch(dashboard, (updateOptions))
@@ -189,9 +282,19 @@ updateOptions()
     <div class="px-4 md:px-0">
       <v-chart class="h-24rem md:h-[450px]" :option="lendingStackedTvlOptions" autoresize />
     </div>
+
+    <div class="px-4 md:px-0">
+      <v-chart class="h-24rem md:h-[450px]" :option="lendingInflowOptions" autoresize />
+    </div>
+
     <div class="px-4 md:px-0">
       <v-chart class="h-24rem md:h-[450px]" :option="vaultStackedTvlOptions" autoresize />
     </div>
+
+    <div class="px-4 md:px-0">
+      <v-chart class="h-24rem md:h-[450px]" :option="vaultInflowOptions" autoresize />
+    </div>
+
   </div>
 </template>
 

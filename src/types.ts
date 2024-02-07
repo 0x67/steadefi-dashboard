@@ -7,7 +7,7 @@ export type TvlChartHistory  = {
   symbol: string
   timestamp: Date
   tvl: number
-  _timestamp: number
+  inflow: number
 }
 
 export type TvlChartResponse = {

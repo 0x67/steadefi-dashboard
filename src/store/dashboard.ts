@@ -5,6 +5,9 @@ import { TvlChartResponse, TvlChartHistory } from "~/types";
 export const useDashboardStore = defineStore('dashboard', () => {
   const lendingTvlHistoryData = ref<TvlChartHistory[]>([])
   const vaultTvlHistoryData = ref<TvlChartHistory[]>([])
+  const uniqueDatetime = ref<string[]>([])
+  const uniqueLendings = ref<string[]>([])
+  const uniqueVaults = ref<string[]>([])
 
   async function fetchTvlChartHistory() {
     const path = `dashboard/tvl`
@@ -20,16 +23,22 @@ export const useDashboardStore = defineStore('dashboard', () => {
         return {
           ...item,
           timestamp: new Date(item.timestamp),
-          _timestamp: new Date(item.timestamp).getTime(),
         }
       }),
+
       vaultTvlHistoryData.value = data.vault.map((item) => {
         return {
           ...item,
           timestamp: new Date(item.timestamp),
-          _timestamp: new Date(item.timestamp).getTime(),
         }
       })
+
+
+      uniqueDatetime.value = Array.from(new Set([
+        ...lendingTvlHistoryData.value.map((item) => item.timestamp.toLocaleDateString()), 
+        ...vaultTvlHistoryData.value.map((item) => item.timestamp.toLocaleDateString())]))
+      uniqueLendings.value = Array.from(new Set(lendingTvlHistoryData.value.map((item) => item.symbol)))
+      uniqueVaults.value = Array.from(new Set(vaultTvlHistoryData.value.map((item) => item.symbol)))
     }
 
     return data
@@ -38,6 +47,9 @@ export const useDashboardStore = defineStore('dashboard', () => {
   return {
     lendingTvlHistoryData,
     vaultTvlHistoryData,
+    uniqueDatetime,
+    uniqueLendings,
+    uniqueVaults,
     fetchTvlChartHistory,
   }
 })
