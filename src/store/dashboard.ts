@@ -1,29 +1,43 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { fetchData } from "~/globals/utils";
-import { TvlChartHistory } from "~/types";
+import { TvlChartResponse, TvlChartHistory } from "~/types";
 
 export const useDashboardStore = defineStore('dashboard', () => {
-  const tvlHistoryData = ref<TvlChartHistory[]>([])
+  const lendingTvlHistoryData = ref<TvlChartHistory[]>([])
+  const vaultTvlHistoryData = ref<TvlChartHistory[]>([])
 
   async function fetchTvlChartHistory() {
     const path = `dashboard/tvl`
 
-    const data = await fetchData<TvlChartHistory[]>({
+    const data = await fetchData<TvlChartResponse>({
       path,
       method: 'GET',
       cacheResult: false,
-    }).catch(() => {})
-    
+    }).catch(() => { })
 
-    if (Array.isArray(data))
-      tvlHistoryData.value = data
+    if (data) {
+      lendingTvlHistoryData.value = data.lending.map((item) => {
+        return {
+          ...item,
+          timestamp: new Date(item.timestamp),
+          _timestamp: new Date(item.timestamp).getTime(),
+        }
+      }),
+      vaultTvlHistoryData.value = data.vault.map((item) => {
+        return {
+          ...item,
+          timestamp: new Date(item.timestamp),
+          _timestamp: new Date(item.timestamp).getTime(),
+        }
+      })
+    }
 
-      
-    return data as TvlChartHistory[]
+    return data
   }
 
   return {
-    tvlHistoryData,
+    lendingTvlHistoryData,
+    vaultTvlHistoryData,
     fetchTvlChartHistory,
   }
 })

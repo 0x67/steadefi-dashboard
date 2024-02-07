@@ -43,7 +43,7 @@ export async function fetchData<T>({
   const res = await response.json();
 
   if (res) {
-    // Cache the fetched data
+    // Cache the fetched data 
     const newCachedData: CachedData<any> = {
       data: res,
       expiryTime: Date.now() + CACHE_TIME,

@@ -9,7 +9,6 @@ async function init() {
   await dashboard.fetchTvlChartHistory()
 }
 
-
 init()
 </script>
 
@@ -17,6 +16,9 @@ init()
   <div class="text-blue-primary w-full gap-[40px] md:flex md:flex-wrap" dark="text-white">
     <div class="flex-1 w-full min-w-[300px] min-h-[50px]">
       <div class="my-[20px]">
+
+        <VaultChart />
+
       </div>
     </div>
   </div>
