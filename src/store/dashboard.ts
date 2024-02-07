@@ -24,7 +24,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
           ...item,
           timestamp: new Date(item.timestamp),
         }
-      }),
+      })
 
       vaultTvlHistoryData.value = data.vault.map((item) => {
         return {
@@ -35,7 +35,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
 
       uniqueDatetime.value = Array.from(new Set([
-        ...lendingTvlHistoryData.value.map((item) => item.timestamp.toLocaleDateString()), 
+        ...lendingTvlHistoryData.value.map((item) => item.timestamp.toLocaleDateString()),
         ...vaultTvlHistoryData.value.map((item) => item.timestamp.toLocaleDateString())]))
       uniqueLendings.value = Array.from(new Set(lendingTvlHistoryData.value.map((item) => item.symbol)))
       uniqueVaults.value = Array.from(new Set(vaultTvlHistoryData.value.map((item) => item.symbol)))

@@ -9,13 +9,8 @@ const props = defineProps<{
 </script>
 
 <template>
-  <n-skeleton
-    :class="`${props.class}`"
-    :text="true"
-    :theme-overrides="{
-      color: isDark ? '#263254' : '#eee',
-      colorEnd: isDark ? '#151f3d' : '#ccc',
-    }"
-    :repeat="props.repeat || 0"
-  />
+  <n-skeleton :class="`${props.class}`" :text="true" :theme-overrides="{
+    color: isDark ? '#263254' : '#eee',
+    colorEnd: isDark ? '#151f3d' : '#ccc',
+  }" :repeat="props.repeat || 0" />
 </template>
