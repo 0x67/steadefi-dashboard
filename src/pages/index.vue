@@ -7,6 +7,7 @@ const dashboard = useDashboardStore()
 
 async function init() {
   await dashboard.fetchTvlChartHistory()
+  await dashboard.fetchTotalUsers()
 }
 
 init()
@@ -16,9 +17,7 @@ init()
   <div class="text-blue-primary w-full gap-[40px] md:flex md:flex-wrap" dark="text-white">
     <div class="flex-1 w-full min-w-[300px] min-h-[50px]">
       <div class="my-[20px]">
-
-        <VaultChart />
-
+        <DashboardChart />
       </div>
     </div>
   </div>

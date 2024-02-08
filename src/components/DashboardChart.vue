@@ -12,7 +12,6 @@ import {
   MarkAreaComponent,
 } from 'echarts/components';
 import VChart from 'vue-echarts';
-import { graphic } from 'echarts';
 import { storeToRefs } from 'pinia';
 
 use([
@@ -29,12 +28,9 @@ use([
 ]);
 
 const dashboard = useDashboardStore();
-const { lendingTvlHistoryData, vaultTvlHistoryData, uniqueDatetime, uniqueLendings, uniqueVaults } = storeToRefs(dashboard);
+const { lendingTvlHistoryData, vaultTvlHistoryData, uniqueDatetime, uniqueLendings, uniqueVaults, tvl, uniqueUsers } = storeToRefs(dashboard);
 
 const defaultOptions = ref({
-  title: {
-    text: 'Stacked TVL'
-  },
   tooltip: {
     trigger: 'axis',
     textStyle: {
@@ -49,15 +45,16 @@ const defaultOptions = ref({
   },
   grid: {
     left: '3%',
-    right: '4%',
-    bottom: '15%',
+    right: '3%',
+    bottom: '5%',
     containLabel: true
   },
-  yAxis: [
-    {
-      type: 'value'
+  yAxis: {
+    type: 'value',
+    axisLabel: {
+      formatter: (val: any) => `$${val / 1000}K`
     }
-  ],
+  }
 })
 
 const lendingStackedTvlOptions = ref({})
@@ -154,7 +151,6 @@ function updateLendingInflowOptions() {
       ...defaultOptions.value.tooltip,
       formatter: formatterTooltipInflow,
     },
-    yAxis: {},
     xAxis: {
       data: uniqueDatetime,
       axisLine: { onZero: true },
@@ -192,7 +188,6 @@ function updateVaultInflowOptions() {
       ...defaultOptions.value.tooltip,
       formatter: formatterTooltipInflow,
     },
-    yAxis: {},
     xAxis: {
       data: uniqueDatetime,
       axisLine: { onZero: true },
@@ -279,20 +274,34 @@ updateOptions()
 
 <template>
   <div>
-    <div class="px-4 md:px-0">
-      <v-chart class="h-24rem md:h-[450px]" :option="lendingStackedTvlOptions" autoresize />
+    <div class="rounded-md flex bg-[#00000059] h-15 text-lg mb-10 w-full opacity-90 gap-4 items-center">
+      <div class="pl-4">
+        <span>TVL: </span>
+        <span class="font-bold text-#ffffff">{{ tvl }}</span>
+      </div>
+
+      <div>
+        <span>Total Users: </span>
+        <span class="font-bold text-#ffffff">{{ uniqueUsers.size }}</span>
+      </div>
     </div>
 
-    <div class="px-4 md:px-0">
-      <v-chart class="h-24rem md:h-[450px]" :option="lendingInflowOptions" autoresize />
-    </div>
+    <div class="space-y-6">
+      <div class="border border-light-300 px-4 md:px-0">
+        <v-chart class="md:h-[450px]" :option="lendingStackedTvlOptions" autoresize />
+      </div>
 
-    <div class="px-4 md:px-0">
-      <v-chart class="h-24rem md:h-[450px]" :option="vaultStackedTvlOptions" autoresize />
-    </div>
+      <div class="border border-light-300 px-4 md:px-0">
+        <v-chart class="h-24rem md:h-[450px]" :option="lendingInflowOptions" autoresize />
+      </div>
 
-    <div class="px-4 md:px-0">
-      <v-chart class="h-24rem md:h-[450px]" :option="vaultInflowOptions" autoresize />
+      <div class="border border-light-300 px-4 md:px-0">
+        <v-chart class="h-24rem md:h-[450px]" :option="vaultStackedTvlOptions" autoresize />
+      </div>
+
+      <div class="border border-light-300 px-4 md:px-0">
+        <v-chart class="h-24rem md:h-[450px]" :option="vaultInflowOptions" autoresize />
+      </div>
     </div>
 
   </div>

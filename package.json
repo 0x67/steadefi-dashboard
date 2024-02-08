@@ -20,10 +20,12 @@
     "@unocss/reset": "^0.58.1",
     "@vueuse/core": "^10.7.0",
     "@vueuse/head": "^2.0.0",
+    "echarts": "^5.4.3",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "vue": "^3.3.13",
     "vue-demi": "^0.14.6",
+    "vue-echarts": "^6.6.8",
     "vue-i18n": "^9.8.0",
     "vue-router": "^4.2.5"
   },
