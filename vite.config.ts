@@ -9,7 +9,6 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Inspect from 'vite-plugin-inspect';
 import LinkAttributes from 'markdown-it-link-attributes';
 import Unocss from 'unocss/vite';
-import VueI18n from '@intlify/vite-plugin-vue-i18n';
 
 export default defineConfig({
   define: {
@@ -59,13 +58,6 @@ export default defineConfig({
     }),
 
     // https://github.com/antfu/unocss
-    // see unocss.config.ts for config
-    VueI18n({
-      runtimeOnly: true,
-      compositionOnly: true,
-      include: [path.resolve(__dirname, 'locales/**')],
-    }),
-
     Unocss(),
 
     // Visit http://localhost:3333/__inspect/ to see the inspector

@@ -2,7 +2,6 @@
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 
-import { NMessageProvider } from 'naive-ui';
 
 // they will be rendered correctly in the html results with vite-ssg
 useHead({
@@ -63,7 +62,5 @@ useHead({
 </script>
 
 <template>
-  <n-message-provider>
-    <RouterView />
-  </n-message-provider>
+  <RouterView />
 </template>

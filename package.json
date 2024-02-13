@@ -23,6 +23,7 @@
     "echarts": "^5.4.3",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
+    "vite-plugin-pages": "^0.32.0",
     "vue": "^3.3.13",
     "vue-demi": "^0.14.6",
     "vue-echarts": "^6.6.8",
