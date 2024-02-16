@@ -2,7 +2,7 @@
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 
-
+import { NMessageProvider } from 'naive-ui'
 // they will be rendered correctly in the html results with vite-ssg
 useHead({
   title: 'Steadefi | Leverage yield strategy vaults with automated rebalancing and risk management',
@@ -62,5 +62,7 @@ useHead({
 </script>
 
 <template>
-  <RouterView />
+  <n-message-provider>
+    <RouterView />
+  </n-message-provider>
 </template>
