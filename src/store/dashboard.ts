@@ -46,7 +46,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         .filter((item) => item.timestamp.toLocaleDateString() === uniqueDatetime.value[uniqueDatetime.value.length - 1])
         .reduce((acc, item) => +acc + +item.tvl, 0)
       const vaultTvl = vaultTvlHistoryData.value
-        .filter((item) => item.timestamp.toLocaleDateString() === uniqueDatetime.value[0])
+        .filter((item) => item.timestamp.toLocaleDateString() === uniqueDatetime.value[uniqueDatetime.value.length - 1])
         .reduce((acc, item) => +acc + +item.tvl, 0)
 
       tvl.value = `$${formatNumber(lendingTvl + vaultTvl)}`
