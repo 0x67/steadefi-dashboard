@@ -7,11 +7,16 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Card: typeof import('./components/Card.vue')['default']
+    DashboardChart: typeof import('./components/DashboardChart.vue')['default']
+    HeaderDesktop: typeof import('./components/HeaderDesktop.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SkeletonBar: typeof import('./components/SkeletonBar.vue')['default']
     TheCounter: typeof import('./components/TheCounter.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
     TheInput: typeof import('./components/TheInput.vue')['default']
+    VaultChart: typeof import('./components/VaultChart.vue')['default']
   }
 }

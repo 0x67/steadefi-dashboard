@@ -1,7 +1,6 @@
 {
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@8.13.1",
   "scripts": {
     "build": "vite-ssg build",
     "dev": "vite --port 3333 --open",
@@ -13,7 +12,6 @@
     "test:unit": "vitest",
     "typecheck": "vue-tsc --noEmit",
     "up": "taze major -I",
-    "postinstall": "npx simple-git-hooks",
     "sizecheck": "npx vite-bundle-visualizer"
   },
   "dependencies": {
@@ -21,10 +19,12 @@
     "@unocss/reset": "^0.58.1",
     "@vueuse/core": "^10.7.0",
     "@vueuse/head": "^2.0.0",
+    "echarts": "^5.4.3",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "vue": "^3.3.13",
     "vue-demi": "^0.14.6",
+    "vue-echarts": "^6.6.8",
     "vue-i18n": "^9.8.0",
     "vue-router": "^4.2.5"
   },
@@ -64,6 +64,7 @@
     "vite": "^5.0.10",
     "vite-bundle-visualizer": "^1.0.0",
     "vite-plugin-inspect": "^0.8.1",
+    "vite-plugin-pages": "^0.32.0",
     "vite-plugin-pwa": "^0.17.4",
     "vite-plugin-vue-devtools": "^1.0.0-rc.8",
     "vite-plugin-vue-layouts": "^0.11.0",
@@ -72,11 +73,5 @@
     "vite-ssg-sitemap": "^0.6.1",
     "vitest": "^1.1.0",
     "vue-tsc": "^1.8.27"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "eslint --fix"
   }
 }
