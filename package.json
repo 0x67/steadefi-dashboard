@@ -17,6 +17,7 @@
   "dependencies": {
     "@unhead/vue": "^1.8.9",
     "@unocss/reset": "^0.58.1",
+    "@vuepic/vue-datepicker": "^8.4.0",
     "@vueuse/core": "^10.7.0",
     "@vueuse/head": "^2.0.0",
     "echarts": "^5.4.3",

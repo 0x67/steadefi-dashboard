@@ -8,6 +8,7 @@ import '@unocss/reset/tailwind.css';
 import 'uno.css';
 import './styles/main.css';
 import { Buffer } from 'buffer';
+import '@vuepic/vue-datepicker/dist/main.css'
 window.Buffer = Buffer;
 
 const routes = setupLayouts(generatedRoutes);

@@ -1,8 +1,10 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
+import { subDays } from 'date-fns';
 import { fetchData, formatNumber } from "~/globals/utils";
 import { TvlChartResponse, TvlChartHistory } from "~/types";
 
 export const useDashboardStore = defineStore('dashboard', () => {
+  const isFetching = ref(false)
   const lendingTvlHistoryData = ref<TvlChartHistory[]>([])
   const vaultTvlHistoryData = ref<TvlChartHistory[]>([])
   const uniqueDatetime = ref<string[]>([])
@@ -10,9 +12,15 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const uniqueVaults = ref<string[]>([])
   const tvl = ref<string>('$0.00')
   const uniqueUsers = ref<Set<string>>(new Set())
+  const date = ref(new Date())
+  const dateRange = ref([subDays(date.value, 14), date.value])
+  const disabledDateChange = computed(() => {
+    return dateRange.value[1] >= date.value
+  })
 
   async function fetchTvlChartHistory() {
-    const path = `dashboard/tvl`
+    isFetching.value = true
+    const path = `dashboard/tvl?startDate=${dateRange.value[0].toISOString()}&endDate=${dateRange.value[1].toISOString()}`
 
     const data = await fetchData<TvlChartResponse>({
       path,
@@ -52,6 +60,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
       tvl.value = `$${formatNumber(lendingTvl + vaultTvl)}`
     }
 
+    isFetching.value = false
     return data
   }
 
@@ -95,6 +104,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
     ])
   }
 
+  watch(dateRange, async () => {
+    await fetchTvlChartHistory()
+  })
+
   return {
     lendingTvlHistoryData,
     vaultTvlHistoryData,
@@ -105,6 +118,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
     tvl,
     uniqueUsers,
     fetchTotalUsers,
+    date,
+    dateRange,
+    disabledDateChange,
+    isFetching
   }
 })
 
