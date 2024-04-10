@@ -361,22 +361,22 @@ updateOptions()
     <div class=" space-y-6">
       <div class="border border-light-300 px-4 md:px-0">
         <v-chart class="md:h-[450px]" :option="lendingStackedTvlOptions" autoresize v-if="!isFetching" />
-        <SkeletonBar :class="'h-24rem md:h-[450px]'" v-else />
+        <SkeletonBar :class="'md:h-[446px]'" v-else />
       </div>
 
       <div class="border border-light-300 px-4 md:px-0">
-        <v-chart class="h-24rem md:h-[450px]" :option="lendingInflowOptions" autoresize v-if="!isFetching" />
-        <SkeletonBar :class="'h-24rem md:h-[450px]'" v-else />
+        <v-chart class="md:h-[450px]" :option="lendingInflowOptions" autoresize v-if="!isFetching" />
+        <SkeletonBar :class="'md:h-[446px]'" v-else />
       </div>
 
       <div class="border border-light-300 px-4 md:px-0">
-        <v-chart class="h-24rem md:h-[450px]" :option="vaultStackedTvlOptions" autoresize v-if="!isFetching" />
-        <SkeletonBar :class="'h-24rem md:h-[450px]'" v-else />
+        <v-chart class="md:h-[450px]" :option="vaultStackedTvlOptions" autoresize v-if="!isFetching" />
+        <SkeletonBar :class="'md:h-[446px]'" v-else />
       </div>
 
       <div class="border border-light-300 px-4 hover md:px-0">
-        <v-chart class="h-24rem md:h-[450px]" :option="vaultInflowOptions" autoresize v-if="!isFetching" />
-        <SkeletonBar :class="'h-24rem md:h-[450px]'" v-else />
+        <v-chart class="md:h-[450px]" :option="vaultInflowOptions" autoresize v-if="!isFetching" />
+        <SkeletonBar :class="'md:h-[446px]'" v-else />
       </div>
     </div>
 
