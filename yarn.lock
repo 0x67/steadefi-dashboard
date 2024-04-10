@@ -2923,6 +2923,13 @@
     js-beautify "^1.14.9"
     vue-component-type-helpers "^1.8.21"
 
+"@vuepic/vue-datepicker@^8.4.0":
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@vuepic/vue-datepicker/-/vue-datepicker-8.4.0.tgz#ba31de2f8842a47dafebf40516b252e991336ecc"
+  integrity sha512-Twgvqwd5GrQf3JT2DvAQ/Ku0+sM51zsH1OkQKoRwYqJyF+EugItS8I0CveYmcI3Gbu92RZ9C3DMutvkaiuDzAQ==
+  dependencies:
+    date-fns "^3.6.0"
+
 "@vueuse/core@^10.7.0":
   version "10.7.2"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-10.7.2.tgz#78917803a29a0bca1803a6521fdf7ff873f6e72c"
@@ -3999,6 +4006,11 @@ date-fns@^2.30.0:
   integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
   dependencies:
     "@babel/runtime" "^7.21.0"
+
+date-fns@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-3.6.0.tgz#f20ca4fe94f8b754951b24240676e8618c0206bf"
+  integrity sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==
 
 dayjs@^1.10.4:
   version "1.11.10"

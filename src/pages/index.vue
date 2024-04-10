@@ -6,8 +6,9 @@ onMounted(async () => {
 const dashboard = useDashboardStore()
 
 async function init() {
-  await dashboard.fetchTvlChartHistory()
   await dashboard.fetchTotalUsers()
+  await dashboard.fetchTvlChartHistory()
+
 }
 
 init()
